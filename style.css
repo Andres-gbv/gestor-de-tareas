@@ -42,7 +42,12 @@ body{
     font-size: 0.9rem;
     color: #666;
 }
-
+.descripcion-tarea {
+    font-size: 0.9rem;
+    color: #555;
+    line-height: 1.4; /* Da un poco de espacio entre líneas para que sea legible */
+    margin-bottom: 10px;
+}
 .etiqueta-prioridad {
     font-size: 0.7rem;
     text-transform: uppercase;
