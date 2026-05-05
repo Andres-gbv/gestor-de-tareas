@@ -1,0 +1,25 @@
+* { margin: 0; padding: 0; box-sizing: border-box; }
+#global-wrapper{
+    display: grid;
+    grid-template-columns: 250px 1fr; 
+    height: 100vh;
+    background-color: rgb(135, 145, 186);
+}
+body{ 
+    background-color: rgb(234, 234, 243);
+}
+.sidebar {
+    background-color: #7581db; /* Negro como en la foto que pasaste */
+    color: rgb(186, 171, 171);
+    padding: 20px;
+}
+
+.tablero{
+    display: flex;
+    flex-direction: row;
+    overflow-x: auto;
+}
+
+ul{
+    list-style: none;
+}
