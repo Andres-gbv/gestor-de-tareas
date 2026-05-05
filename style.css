@@ -10,16 +10,58 @@ body{
 }
 .sidebar {
     background-color: #7581db; /* Negro como en la foto que pasaste */
-    color: rgb(186, 171, 171);
+    color: rgb(252, 252, 252);
+    padding: 20px;
+    border-right: 5px solid #7581db; 
+    margin-right: 10px;
+}
+
+#tablero {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
     padding: 20px;
 }
-
-.tablero{
+.tarjeta-tarea {
+    background-color: white;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     display: flex;
-    flex-direction: row;
-    overflow-x: auto;
+    flex-direction: column;
+    gap: 10px;
+    border-left: 5px solid #7581db; 
 }
 
-ul{
-    list-style: none;
+.tarjeta-tarea h3 {
+    font-size: 1.1rem;
+    color: #333333;
+}
+
+.tarjeta-tarea p {
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.etiqueta-prioridad {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    font-weight: bold;
+    padding: 3px 8px;
+    border-radius: 4px;
+    width: fit-content;
+}
+
+.urgente {
+    background-color: #ff0055; /* Tu color de acento[cite: 5] */
+    color: white;
+}
+
+.footer-tarjeta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+    border-top: 1px solid #eee;
+    padding-top: 10px;
 }

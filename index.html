@@ -16,10 +16,29 @@
     </aside>
     <main>
         <h1>Gestor de Archivos</h1>
-        <header class="top-bar"> barra de arriba
+        <header class="top-bar"> 
+
+
+        <label for="desplegable">Elige una opción:</label>
+        
+            <select id="desplegable">
+                <option value="todo">todo</option>
+                <option value="terminado">terminado</option>
+                <option value="en proceso">En proceso</option>
+                <option value="pendiente">Pendiente</option>
+            </select>
         </header>
         <section id="tablero">
-
+            <!-- Tarjeta de prueba -->
+            <article class="tarjeta-tarea">
+                <span class="etiqueta-prioridad urgente">Urgente</span>
+                <h3>Terminar el login</h3>
+                <p>Configurar la validación del formulario de acceso.</p>
+                <div class="footer-tarjeta">
+                    <span class="fecha">05 May</span>
+                    <button class="btn-eliminar">🗑️</button>
+                </div>
+            </article>
         </section>
     </main>
     <script src="script.js"></script>  
