@@ -28,6 +28,7 @@ function printTareas(filtroEstado = "todo") {
                 <p class="descripcion-tarea">${tarea.descripcion}</p>
                 <div class="footer-tarjeta">
                     <span class="fecha">${formatoFecha}</span>
+                    <button class="btn-editar" onclick="editandoTarea(${tarea.id})">✏️</button>
                     <button class="btn-eliminar" onclick="eliminarTarea(${tarea.id})">🗑️</button>
                 </div>
             </article>
@@ -69,7 +70,17 @@ btnCerrar.onclick = () => modal.classList.add('hidden-task');
 
 formulario.addEventListener('submit', (e) => {
     e.preventDefault();
+    if(editando) {
+        const tarea = tareas.find(t => t.id === editando);
+        tarea.titulo = document.getElementById('titulo-task').value;
+        tarea.descripcion = document.getElementById('descripcion-task').value;
+        tarea.prioridad = document.getElementById('prioridad-task').value;
+        
+        editando = null;
+        document.querySelector('#cont-task h2').innerText = "Nueva Tarea";
 
+
+    }else{
     const nuevaTarea ={
         id : Date.now(),
         titulo : document.getElementById('titulo-task').value,
@@ -78,7 +89,7 @@ formulario.addEventListener('submit', (e) => {
         estado : "pendiente"
     }
 
-tareas.push(nuevaTarea);
+tareas.push(nuevaTarea);}
 printTareas();
 formulario.reset();
 modal.classList.add('hidden-task');
@@ -95,4 +106,21 @@ function cambioEstado (idTarea, nEstado) {
     const filtroActual = document.getElementById('desplegable').value;
     printTareas(filtroActual);
     }
+}
+let editando = null;
+function editandoTarea(id){
+    const tarea = tareas.find(t => t.id === id);
+    if (!tarea) return;
+        
+        document.getElementById('titulo-task').value = tarea.titulo;
+        document.getElementById('descripcion-task').value = tarea.descripcion;
+        document.getElementById('prioridad-task').value = tarea.prioridad;
+        document.querySelector('#cont-task h2').innerText = "Editar Tarea";
+
+        editando = id;
+        modal.classList.remove('hidden-task');
+        
+
+
+
 }
