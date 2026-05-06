@@ -15,11 +15,11 @@
         sidebar
     </aside>
     <main>
-        <h1>Gestor de Archivos</h1>
+        <h1>Gestor de Tareas</h1>
         <header class="top-bar"> 
 
 
-        <label for="desplegable">Elige una opción:</label>
+            <label for="desplegable">Elige una opción:</label>
         
             <select id="desplegable">
                 <option value="todo">todo</option>
@@ -27,18 +27,29 @@
                 <option value="proceso">En proceso</option>
                 <option value="pendiente">Pendiente</option>
             </select>
+            <button id="new-task">+Añadir Tarea</button>
+            <div id="modal-task" class="hidden-task">
+                <div id="cont-task">
+                    <h2>Nueva tarea</h2>
+                    <form id="form-tarea">
+                        <input type="text" id="titulo-task" placeholder="Titulo de la Tarea..." required>
+                        <textarea id="descripcion-task" placeholder="Descripcion...."></textarea>
+                        <label>Prioridad</label>
+                        <select id="prioridad-task">
+                            <option value="baja">Baja</option>
+                            <option value="media">Media</option>
+                            <option value="urgente">Urgente</option>
+                        </select>
+                        <div id="acciones-task">
+                            <button id="cerrar-modal">Cancelar</button>
+                            <button type="submit">Guardar Tarea</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </header>
         <section id="tablero">
-            <!-- Tarjeta de prueba -->
-            <article class="tarjeta-tarea">
-                <span class="etiqueta-prioridad urgente">Urgente</span>
-                <h3>Terminar el login</h3>
-                <p>Configurar la validación del formulario de acceso.</p>
-                <div class="footer-tarjeta">
-                    <span class="fecha">05 May</span>
-                    <button class="btn-eliminar">🗑️</button>
-                </div>
-            </article>
+            
         </section>
     </main>
     <script src="script.js"></script>  
