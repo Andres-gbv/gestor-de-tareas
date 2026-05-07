@@ -1,58 +1,146 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">   
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=Syne:wght@700;800&display=swap" rel="stylesheet">
     <title>Gestor de Tareas</title>
 </head>
-
 <body>
-    <div id="global-wrapper">
-    
-    
-    <aside class="sidebar"> 
-        sidebar
-    </aside>
-    <main>
-        <h1>Gestor de Tareas</h1>
-        <header class="top-bar"> 
 
-
-            <label for="desplegable">Elige una opción:</label>
-        
-            <select id="desplegable">
-                <option value="todo">todo</option>
-                <option value="terminado">terminado</option>
-                <option value="proceso">En proceso</option>
-                <option value="pendiente">Pendiente</option>
-            </select>
-            <button id="new-task">+Añadir Tarea</button>
-            <div id="modal-task" class="hidden-task">
-                <div id="cont-task">
-                    <h2>Nueva tarea</h2>
-                    <form id="form-tarea">
-                        <input type="text" id="titulo-task" placeholder="Titulo de la Tarea..." required>
-                        <textarea id="descripcion-task" placeholder="Descripcion...."></textarea>
-                        <label>Prioridad</label>
-                        <select id="prioridad-task">
-                            <option value="baja">Baja</option>
-                            <option value="media">Media</option>
-                            <option value="urgente">Urgente</option>
-                        </select>
-                        <div id="acciones-task">
-                            <button id="cerrar-modal">Cancelar</button>
-                            <button type="submit">Guardar Tarea</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </header>
-        <section id="tablero">
-            
-        </section>
-    </main>
-    <script src="script.js"></script>  
+<!-- ===== PANTALLA DE LOGIN ===== -->
+<div id="auth-screen">
+    <div class="auth-bg">
+        <div class="auth-blob blob1"></div>
+        <div class="auth-blob blob2"></div>
+        <div class="auth-blob blob3"></div>
     </div>
+    <div class="auth-card">
+        <div class="auth-logo">✦</div>
+        <h1 class="auth-title">TaskFlow</h1>
+        <p class="auth-subtitle">Tu gestor de tareas personal</p>
+
+        <div class="auth-tabs">
+            <button class="auth-tab active" id="tab-login" onclick="switchTab('login')">Iniciar Sesión</button>
+            <button class="auth-tab" id="tab-register" onclick="switchTab('register')">Registrarse</button>
+        </div>
+
+        <!-- Login -->
+        <form id="form-login" class="auth-form" onsubmit="handleLogin(event)">
+            <div class="input-group">
+                <label>Usuario</label>
+                <input type="text" id="login-user" placeholder="Tu nombre de usuario" required autocomplete="username">
+            </div>
+            <div class="input-group">
+                <label>Contraseña</label>
+                <input type="password" id="login-pass" placeholder="Tu contraseña" required autocomplete="current-password">
+            </div>
+            <p class="auth-error hidden" id="login-error">Usuario o contraseña incorrectos</p>
+            <button type="submit" class="auth-btn">Entrar →</button>
+        </form>
+
+        <!-- Registro -->
+        <form id="form-register" class="auth-form hidden" onsubmit="handleRegister(event)">
+            <div class="input-group">
+                <label>Nombre de usuario</label>
+                <input type="text" id="reg-user" placeholder="Elige un usuario" required autocomplete="username">
+            </div>
+            <div class="input-group">
+                <label>Contraseña</label>
+                <input type="password" id="reg-pass" placeholder="Elige una contraseña" required autocomplete="new-password">
+            </div>
+            <div class="input-group">
+                <label>Confirmar contraseña</label>
+                <input type="password" id="reg-pass2" placeholder="Repite la contraseña" required autocomplete="new-password">
+            </div>
+            <p class="auth-error hidden" id="reg-error">Error en el registro</p>
+            <button type="submit" class="auth-btn">Crear cuenta →</button>
+        </form>
+    </div>
+</div>
+
+<!-- ===== APP PRINCIPAL ===== -->
+<div id="global-wrapper" class="hidden">
+    <aside class="sidebar">
+        <div class="sidebar-logo">✦ TaskFlow</div>
+        <div class="sidebar-user">
+            <div class="user-avatar" id="user-avatar"></div>
+            <div>
+                <p class="user-name" id="user-name-display"></p>
+                <p class="user-role">Mi espacio</p>
+            </div>
+        </div>
+        <nav class="sidebar-nav">
+            <button class="nav-item active" onclick="setFiltro('todo')">
+                <span class="nav-icon">◈</span> Todas
+                <span class="nav-count" id="count-todo">0</span>
+            </button>
+            <button class="nav-item" onclick="setFiltro('pendiente')">
+                <span class="nav-icon">◯</span> Pendientes
+                <span class="nav-count" id="count-pendiente">0</span>
+            </button>
+            <button class="nav-item" onclick="setFiltro('proceso')">
+                <span class="nav-icon">◑</span> En proceso
+                <span class="nav-count" id="count-proceso">0</span>
+            </button>
+            <button class="nav-item" onclick="setFiltro('terminado')">
+                <span class="nav-icon">●</span> Terminadas
+                <span class="nav-count" id="count-terminado">0</span>
+            </button>
+        </nav>
+        <button class="logout-btn" onclick="logout()">⎋ Cerrar sesión</button>
+    </aside>
+
+    <main>
+        <header class="top-bar">
+            <div>
+                <h1 id="header-title">Todas las tareas</h1>
+                <p class="header-sub" id="header-sub">Cargando...</p>
+            </div>
+            <button id="new-task">+ Nueva Tarea</button>
+        </header>
+
+        <section id="tablero"></section>
+
+        <!-- Estado vacío -->
+        <div id="empty-state" class="empty-state hidden">
+            <div class="empty-icon">◈</div>
+            <p>No hay tareas aquí</p>
+            <span>¡Añade una nueva tarea para empezar!</span>
+        </div>
+    </main>
+</div>
+
+<!-- ===== MODAL NUEVA/EDITAR TAREA ===== -->
+<div id="modal-task" class="hidden-task">
+    <div id="cont-task">
+        <h2 id="modal-titulo">Nueva tarea</h2>
+        <form id="form-tarea">
+            <div class="input-group">
+                <label>Título</label>
+                <input type="text" id="titulo-task" placeholder="¿Qué hay que hacer?" required>
+            </div>
+            <div class="input-group">
+                <label>Descripción</label>
+                <textarea id="descripcion-task" placeholder="Detalles opcionales..."></textarea>
+            </div>
+            <div class="input-group">
+                <label>Prioridad</label>
+                <select id="prioridad-task">
+                    <option value="baja">🟢 Baja</option>
+                    <option value="media">🟡 Media</option>
+                    <option value="urgente">🔴 Urgente</option>
+                </select>
+            </div>
+            <div id="acciones-task">
+                <button type="button" id="cerrar-modal">Cancelar</button>
+                <button type="submit" class="btn-guardar">Guardar</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script src="script.js"></script>
 </body>
 </html>
